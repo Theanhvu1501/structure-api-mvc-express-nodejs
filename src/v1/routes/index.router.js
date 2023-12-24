@@ -4,7 +4,7 @@ const router = express.Router();
 router.get("/checkstatus", (req, res, next) => {
   res.status(200).json({
     status: "success",
-    message: "api ok test ci-cd",
+    message: "api ok test ci-cd develop",
   });
 });
 
