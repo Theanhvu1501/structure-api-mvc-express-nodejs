@@ -7,7 +7,17 @@ on:
     types: [opened, reopened, synchronize]
   workflow_dispatch:
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v
+      - name: Install dependencies and run tests
+        run: |
+          npm ci
+          npm test
   build:
+    needs: test
     runs-on: ubuntu-latest
     # runs-on: self-hosted
     strategy:
