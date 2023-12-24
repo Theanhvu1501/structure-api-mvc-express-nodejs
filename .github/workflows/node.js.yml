@@ -30,6 +30,11 @@ jobs:
           key: ${{runner.os}}-buildx-${{github.sha}}
           restore-keys: |
             ${{runner.os}}-buildx-
+      - name: Docker meta
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{secrets.DOCKERHUB_USER_NAME}}/nodejs
       - name: Build and push
         uses: docker/build-push-action@v5.1.0
         with:
@@ -37,7 +42,8 @@ jobs:
           file: ./Dockerfile
           builder: ${{steps.buildx.outputs.name}}
           push: true
-          tags: ${{secrets.DOCKERHUB_USER_NAME}}/nodejs
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/buildx-cache
 
