@@ -35,6 +35,7 @@ jobs:
       - name: Set Tags Conditionally
         id: set_tags
         run: |
+          echo "ref:: ${{ github.ref }} "
           # Your conditional logic here to determine the tags
           if [ "${{ github.ref }}" == "refs/heads/master" ]; then
            echo "IMAGE_TAG=$(git rev-parse --short=7 ${{ github.sha }})" >> $GITHUB_ENV
